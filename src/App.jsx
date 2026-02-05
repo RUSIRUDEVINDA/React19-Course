@@ -1,14 +1,18 @@
 import reactLogo from './assets/react.svg'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Button from './Button.jsx'
+import Display from './Display.jsx'
 
 function App() {
-  const [display, setDisplay] = useState(0);
-  const buttonName = "Click Me";
+  const buttonName = "Add 1";
+  const [count, setCount] = useState(0);
 
-
+  const increment = useCallback(() => {
+    console.log("Parent Rendered");
+    setCount((count) => count + 1);
+  }, []);
   return (
     <>
       <div>
@@ -20,16 +24,16 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
-      <h2>{display}</h2>
+      <h2>{count}</h2>
       <div className="card">
-        <Button countToDisplay={count => setDisplay(count)} buttonName={buttonName} />
+        <Button onClick={increment} buttonName={buttonName} />
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
       </div >
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div className='card'>
+        <Display />
+      </div>
     </>
   )
 }
