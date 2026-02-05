@@ -1,44 +1,34 @@
-import { useEffect, useReducer } from 'react'
+import { useEffect, useMemo, useState } from "react";
 
 function Button({ countToDisplay, buttonName }) {
-    //const [count, setCount] = useState(0)
+    const [count, setCount] = useState(0);
+    const [name, setName] = useState("");
 
-    const reducer = (state, action) => {
-        if (action.type == "increment") {
-            return { count: state.count + 1 }
-        }
-        else {
-            return { count: state.count - 1 }
-        }
-    }
-    const [state, dispatch] = useReducer(reducer, { count: 0 })
+    const mutiply = useMemo(() => {
+        return count * 2;
+    }, [count]);
 
     useEffect(() => {
-        countToDisplay(state.count)
-    }, [state.count])
+        countToDisplay(count);
+    }, [count]);
 
-    useEffect(() => {
-        console.log("component is loaded")
-    }, [])
+    console.log('Name : ', name);
+    console.log('Count : ', count);
+    console.log('Multiply : ', mutiply);
 
-    useEffect(() => {
-        return console.log("component is unloaded")
-    }, [])
+    console.log("Button rendered");
+
 
     return (
-        <>
-            <button onClick={() => dispatch({ type: "increment" })}>
-                increment
+        <div className="card" style={{ backgroundColor: '#ffcaea' }}>
+            <button onClick={() => setCount(count + 1)}>
+                {buttonName}
             </button>
-
-            <button onClick={() => dispatch({ type: "decrement" })}>
-                decrement
+            <button onClick={() => setName("Rusiru")}>
+                Change Name
             </button>
-        </>
-
+        </div>
     )
 }
 
-
-export default Button
-
+export default Button;
